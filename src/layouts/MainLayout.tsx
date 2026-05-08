@@ -1,6 +1,32 @@
-import { Outlet, Link } from "react-router-dom";
+import {
+  Outlet,
+  Link,
+  useNavigate,
+} from "react-router-dom";
+
+import { Button } from "@mui/material";
+
+import useAuth from "@/hooks/useAuth";
+
+import { toastService } from "@/services/toastService";
 
 const MainLayout = () => {
+
+  const navigate = useNavigate();
+
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+
+    logout();
+
+    toastService.success(
+      "Logged out successfully"
+    );
+
+    navigate("/login");
+  };
+
   return (
     <div className="flex h-screen bg-gray-100">
 
@@ -35,6 +61,19 @@ const MainLayout = () => {
           </Link>
 
         </nav>
+
+        <Button
+          variant="contained"
+          color="error"
+          fullWidth
+          sx={{
+            marginTop: 4,
+          }}
+          onClick={handleLogout}
+        >
+          Logout
+        </Button>
+
       </aside>
 
       {/* Main Content */}
