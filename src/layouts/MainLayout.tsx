@@ -5,9 +5,9 @@ import {
 } from "react-router-dom";
 
 import {
-  Button,
   Avatar,
   Typography,
+  Button,
 } from "@mui/material";
 
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -17,6 +17,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 
 import LogoutIcon from "@mui/icons-material/Logout";
+
+import MenuIcon from "@mui/icons-material/Menu";
+
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import useAuth from "@/hooks/useAuth";
 
@@ -45,27 +49,36 @@ const MainLayout = () => {
     isActive: boolean;
   }) =>
     isActive
-      ? "bg-blue-500 text-white px-4 py-3 rounded-lg font-semibold flex items-center gap-3"
-      : "hover:bg-gray-200 px-4 py-3 rounded-lg flex items-center gap-3";
+      ? "bg-blue-500 text-white flex items-center gap-3 px-4 py-3 rounded-xl font-semibold shadow-md transition-all"
+      : "flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-100 transition-all";
 
   return (
     <div className="flex h-screen bg-gray-100">
 
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md p-5 flex flex-col justify-between">
+      <aside className="w-72 bg-white shadow-2xl flex flex-col justify-between p-5">
 
         <div>
 
           {/* Logo */}
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: "bold",
-              marginBottom: 4,
-            }}
-          >
-            My App
-          </Typography>
+          <div className="flex items-center gap-3 mb-10">
+
+            <div className="bg-blue-500 text-white p-3 rounded-xl">
+
+              <MenuIcon />
+
+            </div>
+
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              Admin Panel
+            </Typography>
+
+          </div>
 
           {/* Navigation */}
           <nav className="flex flex-col gap-3">
@@ -107,12 +120,17 @@ const MainLayout = () => {
 
         </div>
 
-        {/* User Section */}
-        <div className="flex flex-col gap-4">
+        {/* Bottom Section */}
+        <div className="border-t pt-5">
 
-          <div className="flex items-center gap-3">
+          {/* User */}
+          <div className="flex items-center gap-3 mb-5">
 
-            <Avatar>
+            <Avatar
+              sx={{
+                bgcolor: "#2563eb",
+              }}
+            >
               A
             </Avatar>
 
@@ -137,12 +155,18 @@ const MainLayout = () => {
 
           </div>
 
+          {/* Logout */}
           <Button
             variant="contained"
             color="error"
             fullWidth
             startIcon={<LogoutIcon />}
             onClick={handleLogout}
+            sx={{
+              borderRadius: 3,
+              paddingY: 1.2,
+              fontWeight: "bold",
+            }}
           >
             Logout
           </Button>
@@ -151,25 +175,54 @@ const MainLayout = () => {
 
       </aside>
 
-      {/* Main Content */}
+      {/* Main Section */}
       <div className="flex flex-col flex-1 overflow-hidden">
 
-        {/* Header */}
-        <header className="bg-white shadow-md p-4">
+        {/* Navbar */}
+        <header className="bg-white shadow-md px-8 py-4 flex items-center justify-between">
 
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-            }}
-          >
-            Welcome Back
-          </Typography>
+          <div>
+
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "bold",
+              }}
+            >
+              Welcome Back 👋
+            </Typography>
+
+            <Typography color="text.secondary">
+              Manage your dashboard easily
+            </Typography>
+
+          </div>
+
+          {/* Right Side */}
+          <div className="flex items-center gap-5">
+
+            <div className="bg-gray-100 p-3 rounded-full cursor-pointer hover:bg-gray-200 transition-all">
+
+              <NotificationsIcon />
+
+            </div>
+
+            <Avatar
+              sx={{
+                bgcolor: "#2563eb",
+                width: 45,
+                height: 45,
+              }}
+            >
+              A
+            </Avatar>
+
+          </div>
 
         </header>
 
-        {/* Page Content */}
-        <main className="flex-1 p-6 overflow-y-auto">
+        {/* Content */}
+        <main className="flex-1 overflow-y-auto p-8">
 
           <Outlet />
 
