@@ -10,7 +10,7 @@ import Dashboard from "@/pages/main/Dashboard";
 import Profile from "@/pages/main/Profile";
 import Settings from "@/pages/main/Settings";
 
-import { useAuth } from "@/hooks/useAuth";
+import useAuth from "@/hooks/useAuth";
 
 const AppRouter = () => {
   const { isAuthenticated } = useAuth();

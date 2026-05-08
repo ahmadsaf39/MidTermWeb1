@@ -6,11 +6,15 @@ import {
   Typography,
 } from "@mui/material";
 
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
 
 import { toastService } from "@/services/toastService";
 
 const Signup = () => {
+
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -88,13 +92,17 @@ const Signup = () => {
         Signup
       </Button>
 
-      <Typography textAlign="center">
+      <Typography
+        sx={{
+          textAlign: "center",
+        }}
+      >
 
         Already have an account?{" "}
 
         <Link
           to="/login"
-          className="text-blue-500"
+          className="text-blue-500 font-semibold"
         >
           Login
         </Link>

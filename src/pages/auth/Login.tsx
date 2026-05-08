@@ -7,13 +7,21 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import { useNavigate } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
+
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import useAuth from "@/hooks/useAuth";
 
 import { toastService } from "@/services/toastService";
 
+import ConfirmDialog from "@/components/common/ConfirmDialog";
+
 const Login = () => {
+
   const navigate = useNavigate();
 
   const { login } = useAuth();
@@ -26,9 +34,13 @@ const Login = () => {
   const [loading, setLoading] =
     useState(false);
 
+  const [openDialog, setOpenDialog] =
+    useState(false);
+
   const handleLogin = () => {
 
     if (!email || !password) {
+
       toastService.warning(
         "Please fill all fields"
       );
@@ -67,28 +79,59 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="bg-white/10 backdrop-blur-lg border border-white/20 shadow-2xl rounded-3xl p-8 flex flex-col gap-6">
 
-      <Typography
-        variant="h4"
-        sx={{
-          fontWeight: "bold",
-          textAlign: "center",
-        }}
-      >
-        Login
-      </Typography>
+      {/* Icon */}
+      <div className="flex justify-center">
 
+        <div className="bg-white text-blue-600 p-4 rounded-full shadow-lg">
+
+          <LockOutlinedIcon fontSize="large" />
+
+        </div>
+
+      </div>
+
+      {/* Title */}
+      <div className="text-center">
+
+        <Typography
+          variant="h4"
+          sx={{
+            fontWeight: "bold",
+            color: "white",
+          }}
+        >
+          Welcome Back
+        </Typography>
+
+        <Typography
+          sx={{
+            color: "rgba(255,255,255,0.8)",
+          }}
+        >
+          Login to continue
+        </Typography>
+
+      </div>
+
+      {/* Email */}
       <TextField
         label="Email"
         type="email"
         fullWidth
+        variant="outlined"
         value={email}
         onChange={(e) =>
           setEmail(e.target.value)
         }
+        sx={{
+          backgroundColor: "white",
+          borderRadius: 3,
+        }}
       />
 
+      {/* Password */}
       <TextField
         label="Password"
         type="password"
@@ -97,13 +140,26 @@ const Login = () => {
         onChange={(e) =>
           setPassword(e.target.value)
         }
+        sx={{
+          backgroundColor: "white",
+          borderRadius: 3,
+        }}
       />
 
+      {/* Login Button */}
       <Button
         variant="contained"
         size="large"
-        onClick={handleLogin}
+        onClick={() =>
+          setOpenDialog(true)
+        }
         disabled={loading}
+        sx={{
+          paddingY: 1.5,
+          borderRadius: 3,
+          fontWeight: "bold",
+          backgroundColor: "#2563eb",
+        }}
       >
 
         {loading ? (
@@ -118,6 +174,41 @@ const Login = () => {
         )}
 
       </Button>
+
+      {/* Signup Link */}
+      <Typography
+        sx={{
+          textAlign: "center",
+          color: "white",
+        }}
+      >
+
+        Don’t have an account?{" "}
+
+        <Link
+          to="/signup"
+          className="font-semibold text-yellow-300 hover:underline"
+        >
+          Signup
+        </Link>
+
+      </Typography>
+
+      {/* Dialog */}
+      <ConfirmDialog
+        open={openDialog}
+        title="Login Confirmation"
+        message="Are you sure you want to log in?"
+        onClose={() =>
+          setOpenDialog(false)
+        }
+        onConfirm={() => {
+
+          setOpenDialog(false);
+
+          handleLogin();
+        }}
+      />
 
     </div>
   );
