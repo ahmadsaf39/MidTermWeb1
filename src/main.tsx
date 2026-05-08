@@ -1,21 +1,60 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+import { Outlet, Link } from "react-router-dom";
 
-import App from "./App";
-import "./index.css";
+const MainLayout = () => {
+  return (
+    <div className="flex h-screen bg-gray-100">
 
-import AuthProvider from "@/context/AuthContext";
+      {/* Sidebar */}
+      <aside className="w-64 bg-white shadow-md p-4">
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <AuthProvider>
-        <Toaster position="top-right" />
+        <h1 className="text-2xl font-bold mb-6">
+          My App
+        </h1>
 
-        <App />
-      </AuthProvider>
-    </BrowserRouter>
-  </React.StrictMode>
-);
+        <nav className="flex flex-col gap-3">
+
+          <Link
+            to="/dashboard"
+            className="hover:text-blue-500"
+          >
+            Dashboard
+          </Link>
+
+          <Link
+            to="/profile"
+            className="hover:text-blue-500"
+          >
+            Profile
+          </Link>
+
+          <Link
+            to="/settings"
+            className="hover:text-blue-500"
+          >
+            Settings
+          </Link>
+
+        </nav>
+      </aside>
+
+      {/* Main Content */}
+      <div className="flex flex-col flex-1">
+
+        {/* Header */}
+        <header className="bg-white shadow-md p-4">
+          <h2 className="text-xl font-semibold">
+            Welcome
+          </h2>
+        </header>
+
+        {/* Page Content */}
+        <main className="flex-1 p-6 overflow-y-auto">
+          <Outlet />
+        </main>
+
+      </div>
+    </div>
+  );
+};
+
+export default MainLayout;

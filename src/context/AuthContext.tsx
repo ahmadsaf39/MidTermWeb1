@@ -1,45 +1,29 @@
-import {
-  createContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import { useState } from "react";
+import type { ReactNode } from "react";
 
-type AuthContextType = {
-  isAuthenticated: boolean;
+import { AuthContext } from "./auth-context";
 
-  login: () => void;
-
-  logout: () => void;
-};
-
-export const AuthContext = createContext<AuthContextType | null>(
-  null
-);
-
-type Props = {
+type AuthProviderProps = {
   children: ReactNode;
 };
 
-export default function AuthProvider({ children }: Props) {
+const AuthProvider = ({
+  children,
+}: AuthProviderProps) => {
+
   const [isAuthenticated, setIsAuthenticated] =
-    useState(false);
-
-  useEffect(() => {
-    const auth =
-      localStorage.getItem("isAuthenticated") === "true";
-
-    setIsAuthenticated(auth);
-  }, []);
+    useState<boolean>(
+      !!localStorage.getItem("token")
+    );
 
   const login = () => {
-    localStorage.setItem("isAuthenticated", "true");
+    localStorage.setItem("token", "loggedIn");
 
     setIsAuthenticated(true);
   };
 
   const logout = () => {
-    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("token");
 
     setIsAuthenticated(false);
   };
@@ -55,4 +39,6 @@ export default function AuthProvider({ children }: Props) {
       {children}
     </AuthContext.Provider>
   );
-}
+};
+
+export default AuthProvider;
